@@ -19,6 +19,9 @@ uniform float kA, kD, kS, sN;
 //vertex color
 smooth out vec4 theColor;
 
+smooth out vec4 thePosition;
+smooth out vec4 theNormal;
+
 void main()
 {
     mat4 modelView = viewmatrix * modelmatrix;
@@ -27,19 +30,7 @@ void main()
     // final vertex position
     gl_Position = projection * modelView * position;
 
-    vec4 positionWorld = modelmatrix * position;
-    vec4 newNormal = normalize(normalMatrix * normal);
-
-    //diffuse
-    vec3 lightDir = normalize(lightPos - positionWorld.xyz);
-    float iD = max(0.0, dot(lightDir, newNormal.xyz));
-
-    //specular
-    vec3  v  = -normalize((modelView * position).xyz);
-    vec3  h  =  normalize(lightDir + v);
-    float iS =  pow(max(0.0, dot(newNormal.xyz, h)), sN);
-
-    vec3 lightFactor = kA * ambientColor + kD * iD * diffuseColor + kS * iS * speclarColor;
-
-    theColor = vec4(color.rgb * lightFactor, color.a);
+    theColor = color;
+    thePosition = position;
+    theNormal = normal;
 }
