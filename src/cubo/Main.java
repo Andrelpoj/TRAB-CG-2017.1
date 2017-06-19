@@ -4,6 +4,8 @@ package cubo;
  *
  * @author marcoslage
  */
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.*;
 import org.lwjgl.util.glu.GLU;
@@ -13,8 +15,17 @@ import util.math.Matrix4f;
 import util.math.Vector3f;
 import util.projection.Projection;
 
-public class Main {
+import org.lwjgl.input.Keyboard;
 
+
+public class Main{
+    
+    private static volatile boolean lPressed = false;
+    private static volatile boolean rPressed = false;
+    private static volatile boolean cPressed = false;
+    private static boolean bPressed = false;
+    private static volatile boolean oPressed = false;
+    
     // Creates a new cube
     private final CubeGL cube = new CubeGL();
 
@@ -83,6 +94,7 @@ public class Main {
         // initialize basic OpenGL stuff
         GL11.glViewport(0, 0, width, height);
         GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+        
     }
 
     public void run() {
@@ -117,7 +129,22 @@ public class Main {
             projMatrix.setTo(proj.perspective());            
             viewMatrix.setTo(cam.viewMatrix());
             
-            currentAngle += 0.01f;
+            if(Keyboard.isKeyDown(Keyboard.KEY_B)){
+                currentAngle -= 0.01f;
+            }
+            else if(Keyboard.isKeyDown(Keyboard.KEY_C)){
+                currentAngle += 0.01f;
+            }
+            
+            /*
+            if (bPressed) {
+                currentAngle += 1.0f;
+            }
+            else if(cPressed){
+                currentAngle -= 0.1f;
+            }*/
+            
+            //currentAngle += 0.01f;
             float c = FastMath.cos(currentAngle);
             float s = FastMath.sin(currentAngle);
             
@@ -155,4 +182,48 @@ public class Main {
         example.initGl();
         example.run();
     }
+    
+    /*
+    @Override
+    public void keyTyped(KeyEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if(e.getKeyCode() == KeyEvent.VK_L){
+            lPressed = true;
+        }
+        else if(e.getKeyCode() == KeyEvent.VK_R){
+            rPressed = true;
+        }
+        else if(e.getKeyCode() == KeyEvent.VK_C){
+            cPressed = true;
+        }
+        else if(e.getKeyCode() == KeyEvent.VK_B){
+            bPressed = true;
+        }
+        else if(e.getKeyCode() == KeyEvent.VK_O){
+            oPressed = true;
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        if(e.getKeyCode() == KeyEvent.VK_L){
+            lPressed = false;
+        }
+        else if(e.getKeyCode() == KeyEvent.VK_R){
+            rPressed = false;
+        }
+        else if(e.getKeyCode() == KeyEvent.VK_C){
+            cPressed = false;
+        }
+        else if(e.getKeyCode() == KeyEvent.VK_B){
+            bPressed = false;
+        }
+        else if(e.getKeyCode() == KeyEvent.VK_O){
+            oPressed = false;
+        }
+    }*/
 }
