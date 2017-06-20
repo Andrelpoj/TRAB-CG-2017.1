@@ -20,20 +20,18 @@ import org.lwjgl.input.Keyboard;
 
 public class Main{
     
-    private static volatile boolean lPressed = false;
-    private static volatile boolean rPressed = false;
-    private static volatile boolean cPressed = false;
-    private static boolean bPressed = false;
-    private static volatile boolean oPressed = false;
+    private static boolean orto = false;
     
     // Creates a new cube
     private final CubeGL cube = new CubeGL();
 
     // Animation:
-    private float  currentAngle = 0.0f;
+    private float  currentAngleY = 0.0f;
+    private float  currentAngleX = 0.0f;
     
     // Projection Matrix
-    private final Projection proj = new Projection(45, 1.3333f, 0.0f, 100f);
+    private final Projection proj = new Projection(45, 1.3333f, 0.0f, 100f,
+                                                    -1.0f, 1.0f, -1.0f, 1.0f);
     
     // View Matrix
     private final Vector3f eye = new Vector3f( 0.0f, 2.0f, 2.0f);
@@ -56,6 +54,7 @@ public class Main{
     
     // Model Matrix:
     private final Matrix4f rotationMatrixY = new Matrix4f();
+    private final Matrix4f rotationMatrixX = new Matrix4f();
     private final Matrix4f scaleMatrix = new Matrix4f();
     
     // Final Matrix
@@ -125,34 +124,55 @@ public class Main{
             GL11.glEnable(GL11.GL_CULL_FACE);
             GL11.glCullFace(GL11.GL_BACK);
             
+            if(Keyboard.isKeyDown(Keyboard.KEY_O)){
+                if(orto){
+                    orto = false;
+                }
+                else{
+                    orto = true;
+                }
+            }
+            
             // Projection and View Matrix Setup
-            projMatrix.setTo(proj.perspective());            
+            if(orto == false){
+                projMatrix.setTo(proj.perspective());            
+            }
+            else{
+                projMatrix.setTo(proj.ortographic());
+            }
             viewMatrix.setTo(cam.viewMatrix());
             
             if(Keyboard.isKeyDown(Keyboard.KEY_B)){
-                currentAngle -= 0.01f;
+                currentAngleX -= 0.01f;
             }
             else if(Keyboard.isKeyDown(Keyboard.KEY_C)){
-                currentAngle += 0.01f;
+                currentAngleX += 0.01f;
             }
             
-            /*
-            if (bPressed) {
-                currentAngle += 1.0f;
+            if(Keyboard.isKeyDown(Keyboard.KEY_L)){
+                currentAngleY -= 0.01f;
             }
-            else if(cPressed){
-                currentAngle -= 0.1f;
-            }*/
+            else if(Keyboard.isKeyDown(Keyboard.KEY_R)){
+                currentAngleY += 0.01f; 
+            }
             
-            //currentAngle += 0.01f;
-            float c = FastMath.cos(currentAngle);
-            float s = FastMath.sin(currentAngle);
+            float c = FastMath.cos(currentAngleX);
+            float s = FastMath.sin(currentAngleX);
             
-            rotationMatrixY.m22 = c; rotationMatrixY.m32 = -s;
-            rotationMatrixY.m23 =s; rotationMatrixY.m33 = c;
-
+            rotationMatrixX.m22 = c; rotationMatrixX.m32 = -s;
+            rotationMatrixX.m23 =s; rotationMatrixX.m33 = c;
+            
+            c = FastMath.cos(currentAngleY);
+            s = FastMath.sin(currentAngleY);
+            
+            rotationMatrixY.m11 = c;  rotationMatrixY.m31 = s;
+            rotationMatrixY.m13 = -s; rotationMatrixY.m33 = c;
+            
             modelMatrix.setToIdentity();
+            
+            modelMatrix.multiply(rotationMatrixX);
             modelMatrix.multiply(rotationMatrixY);
+            
             modelMatrix.multiply(scaleMatrix);
                         
             cube.setMatrix("modelmatrix", modelMatrix);
