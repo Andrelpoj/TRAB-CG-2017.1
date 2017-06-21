@@ -16,25 +16,29 @@ import util.math.Vector3f;
 import util.projection.Projection;
 
 import org.lwjgl.input.Keyboard;
+import superficie.Grid;
 
 
 public class Main{
     
     private static boolean orto = false;
     
-    // Creates a new cube
     private final CubeGL cube = new CubeGL();
-
+    // Creates a new surface
+    //private final SurfaceGL surface = new SurfaceGL();
+    
     // Animation:
     private float  currentAngleY = 0.0f;
     private float  currentAngleX = 0.0f;
     
     // Projection Matrix
-    private final Projection proj = new Projection(45, 1.3333f, 0.0f, 100f,
-                                                    -1.0f, 1.0f, -1.0f, 1.0f);
+    private final Projection proj = new Projection(45, 1.3333f, 0.0f, 5f,
+                                                    -2.5f, 2.5f, -2.5f, 2.5f);
+    //private final Projection proj = new Projection(45, 1.3333f, 0.0f, 100.0f);
+        
     
     // View Matrix
-    private final Vector3f eye = new Vector3f( 0.0f, 2.0f, 2.0f);
+    private final Vector3f eye = new Vector3f( 0.0f, 3.0f, 3.0f);
     private final Vector3f at  = new Vector3f( 0.0f, 0.0f, 0.0f);
     private final Vector3f up  = new Vector3f( 0.0f, 1.0f, 2.0f);
     
@@ -42,7 +46,7 @@ public class Main{
     private final Camera cam = new Camera(eye, at, up);
 
     // Light
-    private final Vector3f lightPos     = new Vector3f(0.0f, 2.0f,-2.0f);
+    private final Vector3f lightPos     = new Vector3f( 0.0f, 2.0f, -2.0f);
     private final Vector3f ambientColor = new Vector3f(1.0f, 1.0f, 1.0f);
     private final Vector3f diffuseColor = new Vector3f(1.0f, 1.0f, 1.0f);
     private final Vector3f speclarColor = new Vector3f(1.0f, 1.0f, 1.0f);
@@ -103,9 +107,9 @@ public class Main{
         cube.loadShaders();
        
         // Model Matrix setup
-        scaleMatrix.m11 = 0.5f;
-        scaleMatrix.m22 = 0.5f;
-        scaleMatrix.m33 = 0.5f;
+        scaleMatrix.m11 = 1.0f;
+        scaleMatrix.m22 = 1.0f;
+        scaleMatrix.m33 = 1.0f;
         
         // light setup
         cube.setVector("lightPos"    , lightPos);
@@ -117,6 +121,8 @@ public class Main{
         cube.setFloat("kD", kD);
         cube.setFloat("kS", kS);
         cube.setFloat("sN", sN);
+        
+        Grid grid = new Grid(10);
         
         while (Display.isCloseRequested() == false) {
 

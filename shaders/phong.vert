@@ -9,13 +9,6 @@ uniform mat4 modelmatrix;
 uniform mat4 viewmatrix;
 uniform mat4 projection;
 
-//light parameters
-uniform vec3 lightPos;
-uniform vec3 ambientColor; 
-uniform vec3 diffuseColor;
-uniform vec3 speclarColor;
-uniform float kA, kD, kS, sN;
-
 //vertex color
 smooth out vec4 theColor;
 

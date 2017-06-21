@@ -22,16 +22,27 @@ public class Projection {
     
     public Projection(float fovY, float aspect, float zNear, float zFar,
                         float bottom, float top, float left, float right){
+    //public Projection(float fovY, float aspect, float zNear, float zFar){    
         this.fovY   = fovY;
         this.aspect = aspect;
+        
         this.zNear  = zNear;
         this.zFar   = zFar;
         
-        this.bottom = bottom;
         this.top = top;
-        this.left = left;
+        this.bottom = bottom;
         this.right = right;
+        this.left = left;
         
+        /*
+        float angle = fovY / 2.0f * FastMath.DEG_TO_RAD;
+        float tangent = FastMath.sin(angle) / FastMath.cos(angle);
+        
+        this.top = zNear*tangent;
+        this.bottom = -top;
+        this.right = top * aspect;
+        this.left = -right;
+        */      
     }
     
     public Matrix4f ortographic(){
