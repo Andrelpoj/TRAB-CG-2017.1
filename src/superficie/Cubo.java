@@ -13,11 +13,12 @@ import util.math.Vector4f;
  * @author André
  */
 public class Cubo {
-    protected ArrayList<Vector4f> colors;
+    //protected ArrayList<Vector4f> colors;
     protected ArrayList<Vector4f> positions;
     
-    protected int nverts = 8;
-    protected int nfaces = 12;
+    protected static final int nverts = 8;
+    
+    protected boolean[] sinais = new boolean[nverts];
     
     public Cubo(Vector4f pontoIn, float vX, float vY, float vZ){
         positions = new ArrayList<>(8);
@@ -39,7 +40,5 @@ public class Cubo {
         positions.add( new Vector4f( (x+vX), (y+vY), z , 1.0f) );
         positions.add( new Vector4f( (x+vX),  y    , z , 1.0f) );
         
-        
-
     }
 }

@@ -11,19 +11,25 @@ uniform mat4 projection;
 
 //vertex color
 smooth out vec4 theColor;
+out vec4 theNormal;
 
-smooth out vec4 thePosition;
-smooth out vec4 theNormal;
+//normal matrix
+out mat4 normalMatrix;
+
+//object world position
+out vec4 positionWorld;
+out vec4 thePosition;
 
 void main()
 {
     mat4 modelView = viewmatrix * modelmatrix;
-    mat4 normalMatrix = transpose(inverse(modelView));
+    normalMatrix = transpose(inverse(modelView));
+    positionWorld = modelmatrix * position;
 
     // final vertex position
     gl_Position = projection * modelView * position;
-
+    
+    thePosition = modelView * position;
     theColor = color;
-    thePosition = position;
     theNormal = normal;
 }

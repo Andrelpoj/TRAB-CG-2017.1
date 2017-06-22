@@ -11,14 +11,6 @@
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Iluminação/src/superficie/Cubo.java</file>
-            <file>file:/C:/Iluminação/src/superficie/Grid.java</file>
-            <file>file:/C:/Iluminação/src/util/math/Vector4f.java</file>
-            <file>file:/C:/Iluminação/src/superficie/Surface.java</file>
-            <file>file:/C:/Iluminação/src/cubo/Main.java</file>
-            <file>file:/C:/Iluminação/src/cubo/Cube.java</file>
-            <file>file:/C:/Iluminação/src/cubo/CubeGL.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

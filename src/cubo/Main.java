@@ -17,6 +17,7 @@ import util.projection.Projection;
 
 import org.lwjgl.input.Keyboard;
 import superficie.Grid;
+import superficie.Surface;
 
 
 public class Main{
@@ -26,7 +27,10 @@ public class Main{
     private final CubeGL cube = new CubeGL();
     // Creates a new surface
     //private final SurfaceGL surface = new SurfaceGL();
+    //private final Surface surface = new Surface();
     
+    
+    Grid grid;
     // Animation:
     private float  currentAngleY = 0.0f;
     private float  currentAngleX = 0.0f;
@@ -101,6 +105,11 @@ public class Main{
     }
 
     public void run() {
+        
+        //#############################################
+        grid = new Grid(10);
+        //surface = new Surface(grid.getListaTetra());
+        
         // Creates the vertex array object. 
         // Must be performed before shaders compilation.
         cube.fillVAOs();
@@ -121,8 +130,6 @@ public class Main{
         cube.setFloat("kD", kD);
         cube.setFloat("kS", kS);
         cube.setFloat("sN", sN);
-        
-        Grid grid = new Grid(10);
         
         while (Display.isCloseRequested() == false) {
 
@@ -162,6 +169,20 @@ public class Main{
                 currentAngleY += 0.01f; 
             }
             
+            /*
+            //Y-Rotation
+            float c = FastMath.cos(currentAngleY);
+            float s = FastMath.sin(currentAngleY);      
+            rotationMatrixY.m22 = c; rotationMatrixY.m32 = -s;
+            rotationMatrixY.m23 = s; rotationMatrixY.m33 = c;
+
+            //X-Rotation
+            c = FastMath.cos(currentAngleX);
+            s = FastMath.sin(currentAngleX);      
+            rotationMatrixX.m11 = c; rotationMatrixX.m31 = -s;
+            rotationMatrixX.m13 = s; rotationMatrixX.m33 = c;
+            */
+            
             float c = FastMath.cos(currentAngleX);
             float s = FastMath.sin(currentAngleX);
             
@@ -173,6 +194,7 @@ public class Main{
             
             rotationMatrixY.m11 = c;  rotationMatrixY.m31 = s;
             rotationMatrixY.m13 = -s; rotationMatrixY.m33 = c;
+            
             
             modelMatrix.setToIdentity();
             
