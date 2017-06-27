@@ -18,6 +18,7 @@ import util.projection.Projection;
 import org.lwjgl.input.Keyboard;
 import superficie.Grid;
 import superficie.Surface;
+import superficie.SurfaceGL;
 
 
 public class Main{
@@ -25,6 +26,7 @@ public class Main{
     private static boolean orto = false;
     
     private final CubeGL cube = new CubeGL();
+    private SurfaceGL surface;
     // Creates a new surface
     //private final SurfaceGL surface = new SurfaceGL();
     //private final Surface surface = new Surface();
@@ -108,29 +110,44 @@ public class Main{
         
         //#############################################
         grid = new Grid(10);
-        //surface = new Surface(grid.getListaTetra());
+        surface = new SurfaceGL(grid.getListaTetra());
         
         // Creates the vertex array object. 
         // Must be performed before shaders compilation.
-        cube.fillVAOs();
-        cube.loadShaders();
-       
+        //cube.fillVAOs();
+        //cube.loadShaders();
+        surface.fillVAOs();
+        surface.loadShaders();
+        
         // Model Matrix setup
         scaleMatrix.m11 = 1.0f;
         scaleMatrix.m22 = 1.0f;
         scaleMatrix.m33 = 1.0f;
         
         // light setup
+        /*
         cube.setVector("lightPos"    , lightPos);
         cube.setVector("ambientColor", ambientColor);
         cube.setVector("diffuseColor", diffuseColor);
         cube.setVector("speclarColor", speclarColor);
         
+        
         cube.setFloat("kA", kA);
         cube.setFloat("kD", kD);
         cube.setFloat("kS", kS);
         cube.setFloat("sN", sN);
+        */
+        surface.setVector("lightPos"    , lightPos);
+        surface.setVector("ambientColor", ambientColor);
+        surface.setVector("diffuseColor", diffuseColor);
+        surface.setVector("speclarColor", speclarColor);
         
+        surface.setFloat("kA", kA);
+        surface.setFloat("kD", kD);
+        surface.setFloat("kS", kS);
+        surface.setFloat("sN", sN);
+        
+                
         while (Display.isCloseRequested() == false) {
 
             GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
@@ -202,12 +219,19 @@ public class Main{
             modelMatrix.multiply(rotationMatrixY);
             
             modelMatrix.multiply(scaleMatrix);
-                        
+            
+            /*
             cube.setMatrix("modelmatrix", modelMatrix);
             cube.setMatrix("viewmatrix" , viewMatrix);
             cube.setMatrix("projection" , projMatrix);
             cube.render();
-
+            */
+            
+            surface.setMatrix("modelmatrix", modelMatrix);
+            surface.setMatrix("viewmatrix" , viewMatrix);
+            surface.setMatrix("projection" , projMatrix);
+            
+            
             // check for errors
             if (GL11.GL_NO_ERROR != GL11.glGetError()) {
                 throw new RuntimeException("OpenGL error: " + GLU.gluErrorString(GL11.glGetError()));
