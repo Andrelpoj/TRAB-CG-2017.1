@@ -32,7 +32,7 @@ public class Main{
     // Creates a new surface
     //private final SurfaceGL surface = new SurfaceGL();
     //private final Surface surface = new Surface();
-    Grid grid = new Grid(100);
+    Grid grid = new Grid(10);
     private SurfaceGL surface = new SurfaceGL(grid.getListaTetra());;
     //private MalhaGL malha = new MalhaGL();
     

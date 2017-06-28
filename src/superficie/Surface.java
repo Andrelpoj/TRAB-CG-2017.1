@@ -56,7 +56,7 @@ public class Surface {
             //testa as aretas do tetraedro
             Tetraedro tetra = listaTetra.get(i);
             
-            
+            /*
             aux = testaAresta(tetra.a,tetra.b,tetra.sinais[0],tetra.sinais[1]);
             if(aux!=null) listaAux.add(aux);
             aux = testaAresta(tetra.b,tetra.c,tetra.sinais[1],tetra.sinais[2]);
@@ -70,6 +70,99 @@ public class Surface {
             if(aux!=null) listaAux.add(aux);
             aux = testaAresta(tetra.a,tetra.d,tetra.sinais[0],tetra.sinais[3]);
             if(aux!=null) listaAux.add(aux);
+            */
+            /*
+            aux = testaAresta(tetra.a,tetra.b,tetra.sinais[0],tetra.sinais[1]);
+            if(aux!=null) listaAux.add(aux);
+            aux = testaAresta(tetra.c,tetra.a,tetra.sinais[2],tetra.sinais[0]);
+            if(aux!=null) listaAux.add(aux);
+            aux = testaAresta(tetra.c,tetra.d,tetra.sinais[2],tetra.sinais[3]);
+            if(aux!=null) listaAux.add(aux);
+            aux = testaAresta(tetra.b,tetra.d,tetra.sinais[1],tetra.sinais[3]);
+            if(aux!=null) listaAux.add(aux);
+            
+            aux = testaAresta(tetra.a,tetra.d,tetra.sinais[0],tetra.sinais[3]);
+            if(aux!=null) listaAux.add(aux);
+            aux = testaAresta(tetra.b,tetra.c,tetra.sinais[1],tetra.sinais[2]);
+            if(aux!=null) listaAux.add(aux);
+            */
+            
+            //testa todas as combinacoes possiveis do tetraedro
+            aux = testaAresta(tetra.a,tetra.b,tetra.sinais[0],tetra.sinais[1]);
+            if(aux!=null){
+                listaAux.add(aux);
+                
+                aux = testaAresta(tetra.b,tetra.d,tetra.sinais[1],tetra.sinais[3]);
+                if(aux!=null){
+                    listaAux.add(aux);
+                    
+                    aux = testaAresta(tetra.c,tetra.d,tetra.sinais[2],tetra.sinais[3]);
+                    if(aux!=null){
+                        listaAux.add(aux);
+                        //quadrado ja tenho (0,1) e (3,1) e (3,2) 
+                        aux = testaAresta(tetra.c,tetra.a,tetra.sinais[2],tetra.sinais[0]);
+                        if(aux!=null) listaAux.add(aux);
+                        
+                    }
+                    else{
+                        //triangulo ja tenho (0,1) e (1,3)
+                        aux = testaAresta(tetra.b,tetra.c,tetra.sinais[1],tetra.sinais[2]);
+                        if(aux!=null) listaAux.add(aux);                        
+                    }
+                }
+                else{
+                    aux = testaAresta(tetra.c,tetra.a,tetra.sinais[2],tetra.sinais[0]);
+                    
+                    if(aux!=null){
+                        listaAux.add(aux);
+                        //triangulo ja tenho (0,1) (2,0)
+                        
+                        aux = testaAresta(tetra.a,tetra.d,tetra.sinais[0],tetra.sinais[3]);
+                        if(aux!=null) listaAux.add(aux);
+                    }
+                    else{
+                        //quadrado ja tenho (0,1)
+                        aux = testaAresta(tetra.b,tetra.c,tetra.sinais[1],tetra.sinais[2]);
+                        if(aux!=null) listaAux.add(aux);
+                        aux = testaAresta(tetra.c,tetra.d,tetra.sinais[2],tetra.sinais[3]);
+                        if(aux!=null) listaAux.add(aux);
+                        aux = testaAresta(tetra.a,tetra.d,tetra.sinais[0],tetra.sinais[3]);
+                        if(aux!=null) listaAux.add(aux);
+                    }
+                }
+            }
+            else{
+                aux = testaAresta(tetra.b,tetra.d,tetra.sinais[1],tetra.sinais[3]);
+                if(aux!=null){
+                    listaAux.add(aux);
+                    
+                    aux = testaAresta(tetra.c,tetra.d,tetra.sinais[2],tetra.sinais[3]);
+                    if(aux!=null){
+                        //triangulo
+                        listaAux.add(aux);
+                        aux = testaAresta(tetra.a,tetra.d,tetra.sinais[0],tetra.sinais[3]);
+                        if(aux!=null) listaAux.add(aux);
+                    }
+                    else{
+                        //quadrado ja tenho (3,1)
+                        aux = testaAresta(tetra.a,tetra.d,tetra.sinais[0],tetra.sinais[3]);
+                        if(aux!=null) listaAux.add(aux);
+                        aux = testaAresta(tetra.c,tetra.a,tetra.sinais[2],tetra.sinais[0]);
+                        if(aux!=null) listaAux.add(aux);
+                        aux = testaAresta(tetra.b,tetra.c,tetra.sinais[1],tetra.sinais[2]);
+                        if(aux!=null) listaAux.add(aux);
+                    }
+                }
+                else{
+                    //triangulo
+                    aux = testaAresta(tetra.c,tetra.a,tetra.sinais[2],tetra.sinais[0]);
+                    if(aux!=null) listaAux.add(aux);
+                    aux = testaAresta(tetra.c,tetra.d,tetra.sinais[2],tetra.sinais[3]);
+                    if(aux!=null) listaAux.add(aux);
+                    aux = testaAresta(tetra.b,tetra.c,tetra.sinais[1],tetra.sinais[2]);
+                    if(aux!=null) listaAux.add(aux);
+                }
+            }
             
             //########################################################################
             /*
@@ -95,36 +188,52 @@ public class Surface {
                 positions.add(listaAux.get(2));
                 
                 //System.out.println("3333333333333");
+                /*
+                colors.add( new Vector4f( 1.0f, 0.0f, 0.0f, 1.0f) );
+                colors.add( new Vector4f( 1.0f, 0.0f, 0.0f, 1.0f) );
+                colors.add( new Vector4f( 1.0f, 0.0f, 0.0f, 1.0f) );
+                */
             }
             
             if(listaAux.size()==4){
                 positions.add(listaAux.get(0));
                 positions.add(listaAux.get(1));
                 positions.add(listaAux.get(2));
-                
+                /*
+                colors.add( new Vector4f( 0.0f, 1.0f, 0.0f, 1.0f) );
+                colors.add( new Vector4f( 0.0f, 1.0f, 0.0f, 1.0f) );
+                colors.add( new Vector4f( 0.0f, 1.0f, 0.0f, 1.0f) );
+                */
                 positions.add(listaAux.get(0));
                 positions.add(listaAux.get(2));
                 positions.add(listaAux.get(3));
-                
+                /*
+                colors.add( new Vector4f( 0.0f, 0.0f, 1.0f, 1.0f) );
+                colors.add( new Vector4f( 0.0f, 0.0f, 1.0f, 1.0f) );
+                colors.add( new Vector4f( 0.0f, 0.0f, 1.0f, 1.0f) );
+                */
                 //System.out.println("4444444444444444");
             }
             
             listaAux.clear();
         }
         
+        
         // Fill the colors
         for(int c=0;c<positions.size();c++){
             colors.add( new Vector4f( 1.0f, 0.0f, 0.0f, 1.0f) );
         }
         
+        
         System.out.println(positions.size());
+        
         
         for(int k=0;k<positions.size();k++){
             Vector4f ponto = positions.get(k);
             System.out.printf("%f %f %f %f \n",ponto.x,ponto.y,ponto.z,ponto.w);
             
         }
-
+        
     }
     
     
