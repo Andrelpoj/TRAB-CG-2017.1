@@ -47,13 +47,15 @@ public class Surface {
     
     public Surface(ArrayList<Tetraedro> listaTetra){
         
+        ArrayList<Vector4f> listaAux = new ArrayList<>();
+        Vector4f aux;
+            
+        
         //fill the vertices
         for(int i=0;i<listaTetra.size();i++){
             //testa as aretas do tetraedro
             Tetraedro tetra = listaTetra.get(i);
             
-            ArrayList<Vector4f> listaAux = new ArrayList<>();
-            Vector4f aux;
             
             aux = testaAresta(tetra.a,tetra.b,tetra.sinais[0],tetra.sinais[1]);
             if(aux!=null) listaAux.add(aux);
@@ -62,17 +64,37 @@ public class Surface {
             aux = testaAresta(tetra.c,tetra.a,tetra.sinais[2],tetra.sinais[0]);
             if(aux!=null) listaAux.add(aux);
             
-            aux = testaAresta(tetra.a,tetra.d,tetra.sinais[0],tetra.sinais[3]);
+            aux = testaAresta(tetra.c,tetra.d,tetra.sinais[2],tetra.sinais[3]);
             if(aux!=null) listaAux.add(aux);
             aux = testaAresta(tetra.b,tetra.d,tetra.sinais[1],tetra.sinais[3]);
             if(aux!=null) listaAux.add(aux);
-            aux = testaAresta(tetra.c,tetra.d,tetra.sinais[2],tetra.sinais[3]);
+            aux = testaAresta(tetra.a,tetra.d,tetra.sinais[0],tetra.sinais[3]);
             if(aux!=null) listaAux.add(aux);
+            
+            //########################################################################
+            /*
+            switch(listaAux.size()){
+                case 0: System.out.println("000000000000000000000");
+                    break;
+                case 1: System.out.println("111111111111111111111");
+                    break;
+                case 2: System.out.println("2222222222222222222222222");
+                    break;
+                case 5: System.out.println("55555555555555555555555");
+                    break;
+                case 6: System.out.println("6666666666666666666666");
+                    break;
+            }
+            */
+            //#########################################################################
+            
             
             if(listaAux.size()==3){
                 positions.add(listaAux.get(0));
                 positions.add(listaAux.get(1));
                 positions.add(listaAux.get(2));
+                
+                //System.out.println("3333333333333");
             }
             
             if(listaAux.size()==4){
@@ -83,7 +105,11 @@ public class Surface {
                 positions.add(listaAux.get(0));
                 positions.add(listaAux.get(2));
                 positions.add(listaAux.get(3));
+                
+                //System.out.println("4444444444444444");
             }
+            
+            listaAux.clear();
         }
         
         // Fill the colors
@@ -91,6 +117,14 @@ public class Surface {
             colors.add( new Vector4f( 1.0f, 0.0f, 0.0f, 1.0f) );
         }
         
+        System.out.println(positions.size());
+        
+        for(int k=0;k<positions.size();k++){
+            Vector4f ponto = positions.get(k);
+            System.out.printf("%f %f %f %f \n",ponto.x,ponto.y,ponto.z,ponto.w);
+            
+        }
+
     }
     
     

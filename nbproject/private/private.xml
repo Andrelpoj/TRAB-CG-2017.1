@@ -14,10 +14,11 @@
         <group>
             <file>file:/C:/Iluminação/src/superficie/Cubo.java</file>
             <file>file:/C:/Iluminação/src/superficie/Grid.java</file>
+            <file>file:/C:/Iluminação/src/superficie/SurfaceGL.java</file>
             <file>file:/C:/Iluminação/src/superficie/Surface.java</file>
             <file>file:/C:/Iluminação/src/cubo/Main.java</file>
-            <file>file:/C:/Iluminação/src/cubo/Cube.java</file>
             <file>file:/C:/Iluminação/src/superficie/Tetraedro.java</file>
+            <file>file:/C:/Iluminação/src/cubo/CubeGL.java</file>
         </group>
     </open-files>
 </project-private>

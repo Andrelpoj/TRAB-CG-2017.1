@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package superficie;
 
+
+import superficie.Malha;
 import java.nio.FloatBuffer;
-import java.util.ArrayList;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
@@ -17,11 +13,18 @@ import util.math.Vector3f;
 import util.shader.ObjectGL;
 import util.shader.ShaderProgram;
 
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 /**
  *
  * @author André
  */
-public class SurfaceGL extends Surface implements ObjectGL{
+public class MalhaGL extends Malha implements ObjectGL{
+    
     // Vertex Array Object Id
     private int vaoHandle;
     // Shader Program
@@ -34,15 +37,12 @@ public class SurfaceGL extends Surface implements ObjectGL{
  
     // Buffer with the Colors
     private FloatBuffer colorBuffer;
-    
-    private int nTriangulos;
-    
-    public SurfaceGL(ArrayList<Tetraedro> listaTetra){
-        super(listaTetra);
-        nTriangulos = positions.size()/3;
-        //System.out.println(nTriangulos);
+        
+    //Constructor
+    public MalhaGL() {
+        super();
     }
-    
+
     @Override
     public void fillVAOs() {
         // fills the VBOs
@@ -108,6 +108,7 @@ public class SurfaceGL extends Surface implements ObjectGL{
         int fltId = GL20.glGetUniformLocation(shader.getProgramId(), nameFloat);
         GL20.glUniform1f(fltId, dataFloat);   
     }
+    
 
     public void setVector(String nameVector, Vector3f dataVector) {
         // Buffer with the Model Matrix
@@ -122,6 +123,7 @@ public class SurfaceGL extends Surface implements ObjectGL{
         int vecId = GL20.glGetUniformLocation(shader.getProgramId(), nameVector);
         GL20.glUniform3(vecId, vecBuff);
     }
+    
     
     public void setMatrix(String nameMatrix, Matrix4f dataMatrix) {
         // Buffer with the Model Matrix
@@ -149,33 +151,34 @@ public class SurfaceGL extends Surface implements ObjectGL{
         GL20.glEnableVertexAttribArray(2); // VertexColor
 
         // draw VAO
-        GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, 3*nTriangulos);
+        GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, 3*1);
     }
     
     @Override
     public void fillVBOs() {
         // convert vertex array to buffer
-        //positionBuffer = BufferUtils.createFloatBuffer(4 * 3 * (positions.size()/3)); //4(coordinates)*3(vertices)*n(triangles)
-        positionBuffer = BufferUtils.createFloatBuffer(4 * positions.size()); //4(coordinates * n(vertices)
-        
+        positionBuffer = BufferUtils.createFloatBuffer(4 * 3 * 1); //4(coordinates)*3(vertices)*12(triangles)
         // convert vertex array to buffer
-        normalBuffer = BufferUtils.createFloatBuffer(4 * positions.size()); //4(coordinates)*n(vertices)
-        
+        normalBuffer = BufferUtils.createFloatBuffer(4 * 3 * 1); //4(coordinates)*3(vertices)*12(triangles)
         // convert color array to buffer
-        colorBuffer = BufferUtils.createFloatBuffer(4 * colors.size()); //4(coordinates)*n(vertices)
+        colorBuffer = BufferUtils.createFloatBuffer(4 * 3 * 1); //4(coordinates)*3(vertices)*12(triangles)
+        
+        positions.get(0).store(positionBuffer);
+        positions.get(1).store(positionBuffer);
+        positions.get(2).store(positionBuffer);
 
-        for(int i=0;i<positions.size();i++){
-            positions.get(i).store(positionBuffer);
-            positions.get(i).store(normalBuffer);
-        }
-        for(int j=0;j<colors.size();j++){
-            colors.get(j).store(colorBuffer);
-        }
+        positions.get(0).store(normalBuffer);
+        positions.get(1).store(normalBuffer);
+        positions.get(2).store(normalBuffer);
+        
+        colors.get(0).store(colorBuffer);
+        colors.get(1).store(colorBuffer);
+        colors.get(2).store(colorBuffer);
+
         
         positionBuffer.flip();
         normalBuffer.flip();
         colorBuffer.flip();
     }
 
-    
 }

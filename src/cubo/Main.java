@@ -4,6 +4,7 @@ package cubo;
  *
  * @author marcoslage
  */
+import superficie.MalhaGL;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import org.lwjgl.LWJGLException;
@@ -19,6 +20,8 @@ import org.lwjgl.input.Keyboard;
 import superficie.Grid;
 import superficie.Surface;
 import superficie.SurfaceGL;
+import superficie.Malha;
+import superficie.MalhaGL;
 
 
 public class Main{
@@ -26,13 +29,13 @@ public class Main{
     private static boolean orto = false;
     
     private final CubeGL cube = new CubeGL();
-    private SurfaceGL surface;
     // Creates a new surface
     //private final SurfaceGL surface = new SurfaceGL();
     //private final Surface surface = new Surface();
+    Grid grid = new Grid(100);
+    private SurfaceGL surface = new SurfaceGL(grid.getListaTetra());;
+    //private MalhaGL malha = new MalhaGL();
     
-    
-    Grid grid;
     // Animation:
     private float  currentAngleY = 0.0f;
     private float  currentAngleX = 0.0f;
@@ -109,20 +112,23 @@ public class Main{
     public void run() {
         
         //#############################################
-        grid = new Grid(10);
-        surface = new SurfaceGL(grid.getListaTetra());
+        //grid = new Grid(2);
+        //surface = new SurfaceGL(grid.getListaTetra());
         
         // Creates the vertex array object. 
         // Must be performed before shaders compilation.
         //cube.fillVAOs();
         //cube.loadShaders();
+        
         surface.fillVAOs();
         surface.loadShaders();
+        //malha.fillVAOs();
+        //malha.loadShaders();
         
         // Model Matrix setup
-        scaleMatrix.m11 = 1.0f;
-        scaleMatrix.m22 = 1.0f;
-        scaleMatrix.m33 = 1.0f;
+        scaleMatrix.m11 = 0.5f;
+        scaleMatrix.m22 = 0.5f;
+        scaleMatrix.m33 = 0.5f;
         
         // light setup
         /*
@@ -137,6 +143,7 @@ public class Main{
         cube.setFloat("kS", kS);
         cube.setFloat("sN", sN);
         */
+        
         surface.setVector("lightPos"    , lightPos);
         surface.setVector("ambientColor", ambientColor);
         surface.setVector("diffuseColor", diffuseColor);
@@ -147,12 +154,23 @@ public class Main{
         surface.setFloat("kS", kS);
         surface.setFloat("sN", sN);
         
-                
+        /*
+        malha.setVector("lightPos"    , lightPos);
+        malha.setVector("ambientColor", ambientColor);
+        malha.setVector("diffuseColor", diffuseColor);
+        malha.setVector("speclarColor", speclarColor);
+        
+        malha.setFloat("kA", kA);
+        malha.setFloat("kD", kD);
+        malha.setFloat("kS", kS);
+        malha.setFloat("sN", sN);
+        */
+        
         while (Display.isCloseRequested() == false) {
 
             GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-            GL11.glEnable(GL11.GL_CULL_FACE);
-            GL11.glCullFace(GL11.GL_BACK);
+            //GL11.glEnable(GL11.GL_CULL_FACE);
+            //GL11.glCullFace(GL11.GL_BACK);
             
             if(Keyboard.isKeyDown(Keyboard.KEY_O)){
                 if(orto){
@@ -227,11 +245,18 @@ public class Main{
             cube.render();
             */
             
+            
             surface.setMatrix("modelmatrix", modelMatrix);
             surface.setMatrix("viewmatrix" , viewMatrix);
             surface.setMatrix("projection" , projMatrix);
+            surface.render();
             
-            
+            /*
+            malha.setMatrix("modelmatrix", modelMatrix);
+            malha.setMatrix("viewmatrix" , viewMatrix);
+            malha.setMatrix("projection" , projMatrix);
+            malha.render();
+            */
             // check for errors
             if (GL11.GL_NO_ERROR != GL11.glGetError()) {
                 throw new RuntimeException("OpenGL error: " + GLU.gluErrorString(GL11.glGetError()));
@@ -254,48 +279,4 @@ public class Main{
         example.initGl();
         example.run();
     }
-    
-    /*
-    @Override
-    public void keyTyped(KeyEvent e) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        if(e.getKeyCode() == KeyEvent.VK_L){
-            lPressed = true;
-        }
-        else if(e.getKeyCode() == KeyEvent.VK_R){
-            rPressed = true;
-        }
-        else if(e.getKeyCode() == KeyEvent.VK_C){
-            cPressed = true;
-        }
-        else if(e.getKeyCode() == KeyEvent.VK_B){
-            bPressed = true;
-        }
-        else if(e.getKeyCode() == KeyEvent.VK_O){
-            oPressed = true;
-        }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        if(e.getKeyCode() == KeyEvent.VK_L){
-            lPressed = false;
-        }
-        else if(e.getKeyCode() == KeyEvent.VK_R){
-            rPressed = false;
-        }
-        else if(e.getKeyCode() == KeyEvent.VK_C){
-            cPressed = false;
-        }
-        else if(e.getKeyCode() == KeyEvent.VK_B){
-            bPressed = false;
-        }
-        else if(e.getKeyCode() == KeyEvent.VK_O){
-            oPressed = false;
-        }
-    }*/
 }
