@@ -18,9 +18,11 @@ public class Surface {
     protected ArrayList<Vector4f> positions = new ArrayList<>();
     
     
+    
     //esfera
     // x^2 + y^2 + z^2 = raio
     static final float raio = 2.0f;
+    
     public static boolean testaSinal(Vector4f vertice){
         float c = FastMath.pow(vertice.x, 2) + FastMath.pow(vertice.y, 2) + FastMath.pow(vertice.z, 2) ; 
         float valor = FastMath.pow(raio, 2);
@@ -29,6 +31,8 @@ public class Surface {
         else
             return false;
     }
+    
+    
     
     //retorna o ponto medio caso os pontos que delimitam a aresta tenham sinais diferentes
     private Vector4f testaAresta(Vector4f p1, Vector4f p2, boolean s1, boolean s2){
@@ -56,37 +60,6 @@ public class Surface {
             //testa as aretas do tetraedro
             Tetraedro tetra = listaTetra.get(i);
             
-            /*
-            aux = testaAresta(tetra.a,tetra.b,tetra.sinais[0],tetra.sinais[1]);
-            if(aux!=null) listaAux.add(aux);
-            aux = testaAresta(tetra.b,tetra.c,tetra.sinais[1],tetra.sinais[2]);
-            if(aux!=null) listaAux.add(aux);
-            aux = testaAresta(tetra.c,tetra.a,tetra.sinais[2],tetra.sinais[0]);
-            if(aux!=null) listaAux.add(aux);
-            
-            aux = testaAresta(tetra.c,tetra.d,tetra.sinais[2],tetra.sinais[3]);
-            if(aux!=null) listaAux.add(aux);
-            aux = testaAresta(tetra.b,tetra.d,tetra.sinais[1],tetra.sinais[3]);
-            if(aux!=null) listaAux.add(aux);
-            aux = testaAresta(tetra.a,tetra.d,tetra.sinais[0],tetra.sinais[3]);
-            if(aux!=null) listaAux.add(aux);
-            */
-            /*
-            aux = testaAresta(tetra.a,tetra.b,tetra.sinais[0],tetra.sinais[1]);
-            if(aux!=null) listaAux.add(aux);
-            aux = testaAresta(tetra.c,tetra.a,tetra.sinais[2],tetra.sinais[0]);
-            if(aux!=null) listaAux.add(aux);
-            aux = testaAresta(tetra.c,tetra.d,tetra.sinais[2],tetra.sinais[3]);
-            if(aux!=null) listaAux.add(aux);
-            aux = testaAresta(tetra.b,tetra.d,tetra.sinais[1],tetra.sinais[3]);
-            if(aux!=null) listaAux.add(aux);
-            
-            aux = testaAresta(tetra.a,tetra.d,tetra.sinais[0],tetra.sinais[3]);
-            if(aux!=null) listaAux.add(aux);
-            aux = testaAresta(tetra.b,tetra.c,tetra.sinais[1],tetra.sinais[2]);
-            if(aux!=null) listaAux.add(aux);
-            */
-            
             //testa todas as combinacoes possiveis do tetraedro
             aux = testaAresta(tetra.a,tetra.b,tetra.sinais[0],tetra.sinais[1]);
             if(aux!=null){
@@ -107,7 +80,17 @@ public class Surface {
                     else{
                         //triangulo ja tenho (0,1) e (1,3)
                         aux = testaAresta(tetra.b,tetra.c,tetra.sinais[1],tetra.sinais[2]);
-                        if(aux!=null) listaAux.add(aux);                        
+                        if(aux!=null) listaAux.add(aux);  
+                        
+                        /*
+                        //corrigir a normal
+                        ArrayList<Vector4f> l = new ArrayList<>();
+                        for(int m=0;m<listaAux.size();m++){
+                            l.add(listaAux.get(listaAux.size()-m-1));
+                        }
+                        listaAux.clear();
+                        listaAux = l;
+                        */
                     }
                 }
                 else{
@@ -119,6 +102,16 @@ public class Surface {
                         
                         aux = testaAresta(tetra.a,tetra.d,tetra.sinais[0],tetra.sinais[3]);
                         if(aux!=null) listaAux.add(aux);
+                        
+                        /*
+                        //corrigir a normal
+                        ArrayList<Vector4f> l = new ArrayList<>();
+                        for(int m=0;m<listaAux.size();m++){
+                            l.add(listaAux.get(listaAux.size()-m-1));
+                        }
+                        listaAux.clear();
+                        listaAux = l;
+                        */
                     }
                     else{
                         //quadrado ja tenho (0,1)
@@ -151,6 +144,17 @@ public class Surface {
                         if(aux!=null) listaAux.add(aux);
                         aux = testaAresta(tetra.b,tetra.c,tetra.sinais[1],tetra.sinais[2]);
                         if(aux!=null) listaAux.add(aux);
+                        
+                        
+                        /*
+                        //corrigir a normal
+                        ArrayList<Vector4f> l = new ArrayList<>();
+                        for(int m=0;m<listaAux.size();m++){
+                            l.add(listaAux.get(listaAux.size()-m-1));
+                        }
+                        listaAux.clear();
+                        listaAux = l;
+                        */
                     }
                 }
                 else{
@@ -167,7 +171,7 @@ public class Surface {
             //########################################################################
             /*
             switch(listaAux.size()){
-                case 0: System.out.println("000000000000000000000");
+                case 0: System.out.println("0");
                     break;
                 case 1: System.out.println("111111111111111111111");
                     break;
@@ -216,6 +220,7 @@ public class Surface {
             }
             
             listaAux.clear();
+            aux = null;
         }
         
         
@@ -227,13 +232,13 @@ public class Surface {
         
         System.out.println(positions.size());
         
-        
+        /*
         for(int k=0;k<positions.size();k++){
             Vector4f ponto = positions.get(k);
             System.out.printf("%f %f %f %f \n",ponto.x,ponto.y,ponto.z,ponto.w);
             
         }
-        
+        */
     }
     
     

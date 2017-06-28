@@ -1,10 +1,6 @@
 package cubo;
 
-/**
- *
- * @author marcoslage
- */
-import superficie.MalhaGL;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import org.lwjgl.LWJGLException;
@@ -20,8 +16,6 @@ import org.lwjgl.input.Keyboard;
 import superficie.Grid;
 import superficie.Surface;
 import superficie.SurfaceGL;
-import superficie.Malha;
-import superficie.MalhaGL;
 
 
 public class Main{
@@ -29,19 +23,17 @@ public class Main{
     private static boolean orto = false;
     
     private final CubeGL cube = new CubeGL();
+    
     // Creates a new surface
-    //private final SurfaceGL surface = new SurfaceGL();
-    //private final Surface surface = new Surface();
-    Grid grid = new Grid(10);
+    Grid grid = new Grid(80);
     private SurfaceGL surface = new SurfaceGL(grid.getListaTetra());;
-    //private MalhaGL malha = new MalhaGL();
     
     // Animation:
     private float  currentAngleY = 0.0f;
     private float  currentAngleX = 0.0f;
     
     // Projection Matrix
-    private final Projection proj = new Projection(45, 1.3333f, 0.0f, 5f,
+    private final Projection proj = new Projection(45, 1.3333f, 0.0f, 10f,
                                                     -2.5f, 2.5f, -2.5f, 2.5f);
     //private final Projection proj = new Projection(45, 1.3333f, 0.0f, 100.0f);
         
@@ -122,8 +114,6 @@ public class Main{
         
         surface.fillVAOs();
         surface.loadShaders();
-        //malha.fillVAOs();
-        //malha.loadShaders();
         
         // Model Matrix setup
         scaleMatrix.m11 = 0.5f;
@@ -153,18 +143,6 @@ public class Main{
         surface.setFloat("kD", kD);
         surface.setFloat("kS", kS);
         surface.setFloat("sN", sN);
-        
-        /*
-        malha.setVector("lightPos"    , lightPos);
-        malha.setVector("ambientColor", ambientColor);
-        malha.setVector("diffuseColor", diffuseColor);
-        malha.setVector("speclarColor", speclarColor);
-        
-        malha.setFloat("kA", kA);
-        malha.setFloat("kD", kD);
-        malha.setFloat("kS", kS);
-        malha.setFloat("sN", sN);
-        */
         
         while (Display.isCloseRequested() == false) {
 
@@ -251,12 +229,6 @@ public class Main{
             surface.setMatrix("projection" , projMatrix);
             surface.render();
             
-            /*
-            malha.setMatrix("modelmatrix", modelMatrix);
-            malha.setMatrix("viewmatrix" , viewMatrix);
-            malha.setMatrix("projection" , projMatrix);
-            malha.render();
-            */
             // check for errors
             if (GL11.GL_NO_ERROR != GL11.glGetError()) {
                 throw new RuntimeException("OpenGL error: " + GLU.gluErrorString(GL11.glGetError()));

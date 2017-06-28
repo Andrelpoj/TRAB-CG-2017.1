@@ -123,7 +123,7 @@ public class Grid {
             boolean s6 = cuboAtual.sinais[6];
             boolean s7 = cuboAtual.sinais[7];
             
-            
+            /*
             Tetraedro t1 = new Tetraedro(p0, p3, p4, p2,
                                          s0, s3, s4, s2);
             Tetraedro t2 = new Tetraedro(p3, p7, p4, p2,
@@ -136,21 +136,21 @@ public class Grid {
                                          s7, s6, s4, s2);
             Tetraedro t6 = new Tetraedro(p6, p5, p4, p2,
                                          s6, s5, s4, s2);            
-            
-            /*
-            Tetraedro t1 = new Tetraedro(p3, p0, p4, p2,
-                                         s3, s0, s4, s2);
-            Tetraedro t2 = new Tetraedro(p3, p7, p4, p2,
-                                         s3, s7, s4, s2);
-            Tetraedro t3 = new Tetraedro(p1, p0, p4, p2,
-                                         s1, s0, s4, s2);
-            Tetraedro t4 = new Tetraedro(p1, p5, p4, p2,
-                                         s1, s5, s4, s2);
-            Tetraedro t5 = new Tetraedro(p6, p7, p4, p2,
-                                         s6, s7, s4, s2);
-            Tetraedro t6 = new Tetraedro(p6, p5, p4, p2,
-                                         s6, s5, s4, s2);            
             */
+            
+            Tetraedro t1 = new Tetraedro(p4, p3, p0, p2,
+                                         s4, s3, s0, s2);
+            Tetraedro t2 = new Tetraedro(p4, p7, p3, p2,
+                                         s4, s7, s3, s2);
+            Tetraedro t3 = new Tetraedro(p4, p0, p1, p2,
+                                         s4, s0, s1, s2);
+            Tetraedro t4 = new Tetraedro(p4, p1, p5, p2,
+                                         s4, s1, s5, s2);
+            Tetraedro t5 = new Tetraedro(p4, p5, p6, p2,
+                                         s4, s5, s6, s2);
+            Tetraedro t6 = new Tetraedro(p4, p6, p7, p2,
+                                         s4, s6, s7, s2);            
+            
             
             listaTetra.add(t1);
             listaTetra.add(t2);
